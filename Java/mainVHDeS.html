@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <link rel="stylesheet" href="vhdes.css">
+</head>
+<body>
+
+    <h1 id="welcomeText"></h1>
+
+    <div id="scooterBox">
+        <p>Status: <span id="statusText">Inte uthyrd</span></p>
+        <button id="rentBtn">Hyr elscooter</button>
+        <button id="returnBtn" style="display:none;">Avsluta uthyrning</button>
+    </div>
+
+    <div id="rentalInfo"></div>
+
+<script>
+
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get("username");
+
+    document.getElementById("welcomeText").innerText = "Välkommen " + username;
+
+    let isRented = false;
+    let startTime;
+
+    const rentBtn = document.getElementById("rentBtn");
+    const returnBtn = document.getElementById("returnBtn");
+    const statusText = document.getElementById("statusText");
+    const rentalInfo = document.getElementById("rentalInfo");
+    const scooterBox = document.getElementById("scooterBox");
+
+    rentBtn.addEventListener("click", function(){
+
+        if(!isRented){
+            isRented = true;
+            startTime = new Date();
+
+            statusText.innerText = "Uthyrd";
+            scooterBox.style.backgroundColor = "lightgreen";
+
+            rentBtn.style.display = "none";
+            returnBtn.style.display = "inline";
+
+        }
+
+    });
+</script>
+
+</body>
+</html> 
