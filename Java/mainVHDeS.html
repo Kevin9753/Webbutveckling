@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Profil</title>
     <link rel="stylesheet" href="vhdes.css">
 </head>
+
 <body>
 
     <h1 id="welcomeText"></h1>
@@ -17,39 +19,55 @@
 
     <div id="rentalInfo"></div>
 
-<script>
+    <script>
 
-    const params = new URLSearchParams(window.location.search);
-    const username = params.get("username");
+        const params = new URLSearchParams(window.location.search);
+        const username = params.get("username");
 
-    document.getElementById("welcomeText").innerText = "Välkommen " + username;
+        document.getElementById("welcomeText").innerText = "Välkommen " + username;
 
-    let isRented = false;
-    let startTime;
+        let isRented = false;
+        let startTime;
 
-    const rentBtn = document.getElementById("rentBtn");
-    const returnBtn = document.getElementById("returnBtn");
-    const statusText = document.getElementById("statusText");
-    const rentalInfo = document.getElementById("rentalInfo");
-    const scooterBox = document.getElementById("scooterBox");
+        const rentBtn = document.getElementById("rentBtn");
+        const returnBtn = document.getElementById("returnBtn");
+        const statusText = document.getElementById("statusText");
+        const rentalInfo = document.getElementById("rentalInfo");
+        const scooterBox = document.getElementById("scooterBox");
 
-    rentBtn.addEventListener("click", function(){
+        rentBtn.addEventListener("click", function () {
+            if (!isRented) {
+                isRented = true;
+                startTime = new Date();
+                statusText.innerText = "Uthyrd";
+                scooterBox.style.backgroundColor = "lightgreen";
+                rentBtn.style.display = "none";
+                returnBtn.style.display = "inline";
+            }
+        });
 
-        if(!isRented){
-            isRented = true;
-            startTime = new Date();
+        returnBtn.addEventListener("click", function () {
 
-            statusText.innerText = "Uthyrd";
-            scooterBox.style.backgroundColor = "lightgreen";
+            isRented = false;
 
-            rentBtn.style.display = "none";
-            returnBtn.style.display = "inline";
+            let endTime = new Date();
 
-        }
+            statusText.innerText = "Inte uthyrd";
+            scooterBox.style.backgroundColor = "lightgray";
 
-    });
-    
-</script>
+            rentBtn.style.display = "inline";
+            returnBtn.style.display = "none";
+
+            rentalInfo.innerHTML =
+                "<h3>Senaste uthyrning:</h3>" +
+                "<p>Start: " + startTime.toLocaleTimeString() + "</p>" +
+                "<p>Slut: " + endTime.toLocaleTimeString() + "</p>";
+
+        });
+
+
+    </script>
 
 </body>
-</html> 
+
+</html>
