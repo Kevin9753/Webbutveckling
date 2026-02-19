@@ -11,61 +11,95 @@
 
     <h1 id="welcomeText"></h1>
 
-    <div id="scooterBox">
-        <p>Status: <span id="statusText">Inte uthyrd</span></p>
-        <button id="rentBtn">Hyr elscooter</button>
-        <button id="returnBtn" style="display:none;">Avsluta uthyrning</button>
+    <h2>Välj en elscooter att hyra</h2>
+
+    <div class="scooterContainer">
+
+        <div class="scooter">
+            <img src="model x.avif" width="150">
+            <button id="btn1">Hyr Model X</button>
+        </div>
+
+        <div class="scooter">
+            <img src="model pro.webp" width="150">
+            <button id="btn2">Hyr Model Pro</button>
+        </div>
+
+        <div class="scooter">
+            <img src="model max.webp" width="150">
+            <button id="btn3">Hyr Model Max</button>
+        </div>
+
     </div>
+
+    <p id="statusText">Ingen scooter uthyrd</p>
+
+    <button id="returnBtn" style="display:none;">Avsluta uthyrning</button>
 
     <div id="rentalInfo"></div>
 
     <script>
-
+        
         const params = new URLSearchParams(window.location.search);
         const username = params.get("username");
 
         document.getElementById("welcomeText").innerText = "Välkommen " + username;
 
-        let isRented = false;
+        let currentScooter = "";
         let startTime;
 
-        const rentBtn = document.getElementById("rentBtn");
-        const returnBtn = document.getElementById("returnBtn");
         const statusText = document.getElementById("statusText");
+        const returnBtn = document.getElementById("returnBtn");
         const rentalInfo = document.getElementById("rentalInfo");
-        const scooterBox = document.getElementById("scooterBox");
 
-        rentBtn.addEventListener("click", function () {
-            if (!isRented) {
-                isRented = true;
+        document.getElementById("btn1").addEventListener("click", function () {
+
+            if (currentScooter === "") {
+                currentScooter = "Model X";
                 startTime = new Date();
-                statusText.innerText = "Uthyrd";
-                scooterBox.style.backgroundColor = "lightgreen";
-                rentBtn.style.display = "none";
+                statusText.innerText = "Du hyr Model X";
                 returnBtn.style.display = "inline";
             }
+
+        });
+
+        document.getElementById("btn2").addEventListener("click", function () {
+
+            if (currentScooter === "") {
+                currentScooter = "Model Pro";
+                startTime = new Date();
+                statusText.innerText = "Du hyr Model Pro";
+                returnBtn.style.display = "inline";
+            }
+
+        });
+
+        document.getElementById("btn3").addEventListener("click", function () {
+
+            if (currentScooter === "") {
+                currentScooter = "Model Max";
+                startTime = new Date();
+                statusText.innerText = "Du hyr Model Max";
+                returnBtn.style.display = "inline";
+            }
+
         });
 
         returnBtn.addEventListener("click", function () {
 
-            isRented = false;
-
             let endTime = new Date();
 
-            statusText.innerText = "Inte uthyrd";
-            scooterBox.style.backgroundColor = "lightgray";
-
-            rentBtn.style.display = "inline";
+            statusText.innerText = "Ingen scooter uthyrd";
             returnBtn.style.display = "none";
 
-            rentalInfo.innerHTML =
-                "<h3>Senaste uthyrning:</h3>" +
-                "<p>Start: " + startTime.toLocaleTimeString() + "</p>" +
-                "<p>Slut: " + endTime.toLocaleTimeString() + "</p>";
+            rentalInfo.innerText =
+                "Senaste uthyrning:\n" +
+                currentScooter + "\n" +
+                startTime.toLocaleTimeString() + " - " +
+                endTime.toLocaleTimeString();
 
+            currentScooter = "";
         });
-
-
     </script>
 
 </body>
